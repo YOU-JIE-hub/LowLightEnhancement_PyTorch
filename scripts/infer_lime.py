@@ -4,15 +4,16 @@ import numpy as np
 from tqdm import tqdm
 from traditional.lime_enhance import enhance_lime
 
-input_folder = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\data\Raw\low_val"
-output_folder = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\results\LIME_val"
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+input_folder = os.path.join(project_root, "data", "Raw", "low_val")
+output_folder = os.path.join(project_root, "results", "LIME")
 
 os.makedirs(output_folder, exist_ok=True)
 
 image_list = sorted(os.listdir(input_folder))
 print(f"開始 LIME 推論，共 {len(image_list)} 張圖像...")
 
-for img_name in tqdm(image_list):
+for img_name in tqdm(image_list, desc="推論 LIME"):
     img_path = os.path.join(input_folder, img_name)
     try:
         img = Image.open(img_path).convert('RGB')               # 讀取並轉為 RGB 格式
