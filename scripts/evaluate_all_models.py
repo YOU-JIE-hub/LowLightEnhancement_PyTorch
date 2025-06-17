@@ -9,8 +9,9 @@ from skimage.metrics import peak_signal_noise_ratio as psnr
 import piq
 import torchvision.transforms.functional as TF
 
-gt_dir = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\data\Raw\high_val"
-save_dir = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\results\Comparison"
+project_root = os.path.dirname(os.path.abspath(__file__))
+gt_dir = os.path.join(project_root, "..", "data", "Raw", "high_val")
+save_dir = os.path.join(project_root, "..", "results", "Comparison")
 os.makedirs(save_dir, exist_ok=True)
 
 # 用 _val 資料夾
@@ -63,7 +64,7 @@ def plot_radar_chart(model_list, filename):
     plt.close()
 
 gt_list = sorted([f for f in os.listdir(gt_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))])
-print(f"\n📝 共 {len(gt_list)} 張 Val Ground Truth 圖片，開始模型評估...\n")
+print(f"\n共 {len(gt_list)} 張 Val Ground Truth 圖片，開始模型評估...\n")
 
 results = {}
 
@@ -83,10 +84,7 @@ for model, (folder, pattern) in model_configs.items():
         except:
             continue
 
-        pred_path = os.path.join(
-            r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\results",
-            folder, pattern.format(name=name_base)
-        )
+        pred_path = os.path.join(project_root, "..", "results", folder, pattern.format(name=name_base))
         if not os.path.exists(pred_path): continue
 
         try:
@@ -113,7 +111,7 @@ for model, (folder, pattern) in model_configs.items():
             "Count": count
         }
 
-print("\n📊 模型畫質評估總結：")
+print("\n模型畫質評估總結：")
 print("{:<20} {:>8} {:>8} {:>10} {:>8} {:>10}".format("模型", "PSNR", "SSIM", "BRISQUE", "PI", "張數"))
 for model, score in results.items():
     print(f"{model:<20} {score['PSNR']:>8.2f} {score['SSIM']:>8.3f} {score['BRISQUE']:>10.2f} {score['PI']:>8.2f} {score['Count']:>10}")
