@@ -3,6 +3,7 @@ import torch
 from torchvision import transforms
 from torchvision.utils import save_image
 from PIL import Image
+from tqdm import tqdm
 from networks.drbn import DRBN
 
 project_root = os.path.dirname(os.path.abspath(__file__))
@@ -26,8 +27,7 @@ to_tensor = transforms.ToTensor()
 image_names = [f for f in os.listdir(input_dir) if f.lower().endswith(('.jpg', '.png'))]
 print(f"共找到 {len(image_names)} 張圖片")
 
-for img_name in image_names:
-    print(f"→ 處理中：{img_name}")
+for img_name in tqdm(image_names, desc="推論 DRBN"):
     try:
         img_path = os.path.join(input_dir, img_name)
         image = Image.open(img_path).convert("RGB")
