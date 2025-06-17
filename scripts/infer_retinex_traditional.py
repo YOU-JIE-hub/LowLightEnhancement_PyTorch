@@ -5,8 +5,9 @@ from torchvision import transforms
 from tqdm import tqdm
 from traditional.retinex_traditional import enhance_retinex  # 導入 Retinex 增強函式（已自定義）
 
-input_folder = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\data\Raw\low_val"
-output_folder = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\results\RetinexTraditional_val"  # 儲存增強圖
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+input_folder = os.path.join(project_root, "data", "Raw", "low_val")
+output_folder = os.path.join(project_root, "results", "RetinexTraditional")  # 儲存增強圖
 
 os.makedirs(output_folder, exist_ok=True)
 
@@ -19,7 +20,7 @@ device = torch.device("cpu")
 image_list = sorted(os.listdir(input_folder))
 print(f"開始 RetinexTraditional 推論，共 {len(image_list)} 張圖像...")
 
-for img_name in tqdm(image_list):
+for img_name in tqdm(image_list, desc="推論 RetinexTraditional"):
     img_path = os.path.join(input_folder, img_name)
     try:
         # 開啟並轉換為 RGB 模式
