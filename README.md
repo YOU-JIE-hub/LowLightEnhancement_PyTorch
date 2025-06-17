@@ -43,7 +43,7 @@ DRBN	            16.80202909	  0.747324044	 6.448982747	8.224491374
 
 - 主觀視覺比較：多模型同圖對照強化結果
 
-![比對圖1](./results/comparison1.png)
+![比對圖1](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison1.jpg)
 ![比對圖2](./results/comparison2.png)
 ![比對圖3](./results/comparison3.png)
 ![比對圖4](./results/comparison4.png)
@@ -175,7 +175,7 @@ https://github.com/dongb5/Retinex.
 (2025).
 7.	Oppenheim, A. V., Schafer, R. W., & Stockham, T. G. (1968). Nonlinear Filtering of Multiplied and Convolved Signals. Proceedings of the IEEE, 56(8), 1264–1291.
 
-> 本專案基於上述開源模型與論文，進行重構、修正與整合，並已於技術報告中完整說明引用來源。
+本專案基於上述開源模型與論文，進行重構、修正與整合，並已於技術報告中完整說明引用來源。
 
 ---
 
@@ -185,4 +185,4 @@ https://github.com/dongb5/Retinex.
 - 學歷：元智大學電機工程學系學士
 - 技術專長：PyTorch、影像處理、模型重構、低光增強
 
-> 本專案為本人畢業專題實作成果，歡迎交流！
+本專案為本人畢業專題實作成果，歡迎交流！
