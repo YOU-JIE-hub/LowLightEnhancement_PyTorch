@@ -1,3 +1,5 @@
+# scripts/evaluate_all_models.py
+
 import os
 import numpy as np
 from PIL import Image
@@ -9,12 +11,11 @@ from skimage.metrics import peak_signal_noise_ratio as psnr
 import piq
 import torchvision.transforms.functional as TF
 
-project_root = os.path.dirname(os.path.abspath(__file__))
-gt_dir = os.path.join(project_root, "..", "data", "Raw", "high_val")
-save_dir = os.path.join(project_root, "..", "results", "Comparison")
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+gt_dir = os.path.join(project_root, "data", "Raw", "high_val")
+save_dir = os.path.join(project_root, "results", "Comparison")
 os.makedirs(save_dir, exist_ok=True)
 
-# 用 _val 資料夾
 model_configs = {
     "FreqFilter":         ("FreqFilter_val", "{name}.png"),
     "LIME":               ("LIME_val", "{name}.png"),
@@ -46,10 +47,11 @@ def plot_radar_chart(model_list, filename):
     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
 
     for model in model_list:
-        if model not in results: continue
+        if model not in results:
+            continue
         values = [results[model][m] for m in metrics]
         norm_vals = values.copy()
-        norm_vals[2] = 100 - norm_vals[2]  # BRISQUE 反向
+        norm_vals[2] = 100 - norm_vals[2]
         norm_vals = (np.array(norm_vals) - min_vals) / (max_vals - min_vals + 1e-6)
         norm_vals = norm_vals.tolist()
         norm_vals += [norm_vals[0]]
@@ -84,8 +86,9 @@ for model, (folder, pattern) in model_configs.items():
         except:
             continue
 
-        pred_path = os.path.join(project_root, "..", "results", folder, pattern.format(name=name_base))
-        if not os.path.exists(pred_path): continue
+        pred_path = os.path.join(project_root, "results", folder, pattern.format(name=name_base))
+        if not os.path.exists(pred_path):
+            continue
 
         try:
             pred_img = Image.open(pred_path).convert("RGB")
