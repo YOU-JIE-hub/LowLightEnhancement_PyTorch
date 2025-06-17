@@ -5,9 +5,10 @@ from torchvision.utils import save_image
 from PIL import Image
 from networks.drbn import DRBN
 
-input_dir = "C:/Users/hurry/OneDrive/桌面/LowLightEnhancement_PyTorch/data/Raw/low_val"
-raw_output_dir = "C:/Users/hurry/OneDrive/桌面/LowLightEnhancement_PyTorch/results/DRBN_val"
-model_path = "C:/Users/hurry/OneDrive/桌面/LowLightEnhancement_PyTorch/checkpoints/DRBN/drbn_260.pth"
+project_root = os.path.dirname(os.path.abspath(__file__))
+input_dir = os.path.join(project_root, "..", "data", "Raw", "low_val")
+raw_output_dir = os.path.join(project_root, "..", "results", "DRBN")
+model_path = os.path.join(project_root, "..", "checkpoints", "DRBN", "drbn.pth")
 
 os.makedirs(raw_output_dir, exist_ok=True)
 
