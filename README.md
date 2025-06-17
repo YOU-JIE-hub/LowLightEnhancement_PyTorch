@@ -32,20 +32,22 @@
 
 - 客觀評估指標：PSNR、SSIM、NIQE
 
-Model	              PSNR	      SSIM	         BRISQUE	    PI
-FreqFilter	        8.418641058	  0.259216603	 16.92715251	13.46357625
-LIME	              9.44970279	  0.291692113	 55.45676473	32.72838236
-RetinexNet	        17.59915801	  0.717233259	 36.31658529	23.15829264
-RetinexTraditional	13.82073052	  0.583829124	 17.26178385	13.63089193
-ZeroDCE	            12.08034649	  0.457940512	 4.035050456	7.017525228
-EnlightenGAN	      19.44944589	  0.714923392	 41.04030762	25.52015381
-DRBN	              16.80202909	  0.747324044	 6.448982747	8.224491374
+| Model              | PSNR    | SSIM    | BRISQUE | PI      |
+|--------------------|---------|---------|---------|---------|
+| FreqFilter         | 8.42    | 0.259   | 16.93   | 13.46   |
+| LIME               | 9.45    | 0.292   | 55.46   | 32.73   |
+| RetinexNet         | 17.60   | 0.717   | 36.32   | 23.16   |
+| RetinexTraditional | 13.82   | 0.584   | 17.26   | 13.63   |
+| ZeroDCE            | 12.08   | 0.458   | 4.04    | 7.02    |
 
 - 主觀視覺比較：多模型同圖對照強化結果
 
 ![比對圖1](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison1.jpg)
+
 ![比對圖2](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison2.jpg)
+
 ![比對圖3](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison3.jpg)
+
 ![比對圖4](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison4.jpg)
 
 ---
