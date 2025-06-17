@@ -6,9 +6,10 @@ from torchvision.utils import save_image
 from tqdm import tqdm
 from networks.enlightengan_unet import ImprovedUNet
 
-model_path = r"C:/Users/hurry/OneDrive/桌面/LowLightEnhancement_PyTorch/checkpoints/EnlightenGAN/EnlightenGAN_100.pth"
-input_dir  = r"C:/Users/hurry/OneDrive/桌面/LowLightEnhancement_PyTorch/data/Raw/low_val"
-save_dir  = r"C:/Users/hurry/OneDrive/桌面/LowLightEnhancement_PyTorch/results/EnlightenGAN_val"
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+model_path = os.path.join(project_root, "checkpoints", "EnlightenGAN", "EnlightenGAN.pth")
+input_dir  = os.path.join(project_root, "data", "Raw", "low_val")
+save_dir   = os.path.join(project_root, "results", "EnlightenGAN")
 os.makedirs(save_dir, exist_ok=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -22,7 +23,7 @@ transform_tensor = transforms.Compose([
     transforms.Lambda(lambda x: x.pow(0.4545))  # gamma 還原
 ])
 
-for name in tqdm(os.listdir(input_dir), desc="🔍 推論中"):
+for name in tqdm(os.listdir(input_dir), desc="推論 EnlightenGAN"):
     if not name.lower().endswith((".jpg", ".png")):
         continue
 
@@ -39,5 +40,3 @@ for name in tqdm(os.listdir(input_dir), desc="🔍 推論中"):
         output = torch.nn.functional.interpolate(output, size=orig_size[::-1], mode="bilinear", align_corners=False)
 
     save_image(output, os.path.join(save_dir, name))
-
-print(f"\nEnlightenGAN 推論完成，結果已還原原始解析度：{save_dir}")
