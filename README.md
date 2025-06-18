@@ -208,6 +208,30 @@ model.load_state_dict(torch.load("xxx.pth", map_location=device))
 
 ---
 
+### 模型評估腳本使用說明
+#### 輸入要求
+Ground Truth 路徑：
+```
+data/Raw/high_val/
+```
+各模型推論結果需放於：
+```
+results/{模型名_val}/{對應檔名}.png
+```
+#### 輸出內容
+評估指標表格（CSV）：
+```
+results/Comparison/quality_val.csv
+```
+雷達圖可視化：
+```
+results/Comparison/quality_val_radar.png
+results/Comparison/radar_val_group1_dl.png
+results/Comparison/radar_val_group2_traditional.png
+```
+
+---
+
 ## 環境
 
 - Python 3.10, PyTorch 2.x
