@@ -18,9 +18,12 @@ os.makedirs(raw_output_folder, exist_ok=True)
 os.makedirs(post_output_folder, exist_ok=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"使用設備： {device}")
+
 model = ZeroDCE().to(device)
 model.load_state_dict(torch.load(model_path, map_location=device))
 model.eval()
+print("模型載入完成")
 
 transform = transforms.Compose([transforms.ToTensor()])
 
