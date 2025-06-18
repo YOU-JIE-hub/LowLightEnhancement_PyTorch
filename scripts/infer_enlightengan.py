@@ -40,3 +40,4 @@ for name in tqdm(os.listdir(input_dir), desc="推論 EnlightenGAN"):
         output = torch.nn.functional.interpolate(output, size=orig_size[::-1], mode="bilinear", align_corners=False)
 
     save_image(output, os.path.join(save_dir, name))
+print("所有圖片增強完成，已儲存至:", save_dir)
