@@ -143,7 +143,7 @@ LowLightEnhancement_PyTorch/
 
 因 GitHub 空間限制，完整資料集、模型權重與全部結果圖另提供於雲端：
 
-👉 [點我前往下載區（Google Drive）](https://drive.google.com/file/d/1U7CDi63s4Z7tY5yxRXzrLGXeh6TnGDiz/view?usp=sharing)
+👉 [點我前往下載區（Google Drive）](https://drive.google.com/drive/folders/1ONZraTVOyk__ASMSUu8K3sL6q_jefm26?usp=sharing)
 
 ├── checkpoints/ # 各模型訓練完成之權重檔 (.pt)
 ├── data/ # 原始與合成的低光影像資料集
