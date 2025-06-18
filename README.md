@@ -187,7 +187,7 @@ Google Drive 資料夾結構如下：
   }
   torch.save(checkpoint, "checkpoint_epoch_{epoch}.pth")
 ```
-Infer: auto-fallback load:
+- Infer: auto-fallback load:
 ```
 ckpt = torch.load(ckpt_path, map_location=device)
 if "G_state" in ckpt:
