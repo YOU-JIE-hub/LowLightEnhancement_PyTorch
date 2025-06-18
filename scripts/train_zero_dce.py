@@ -22,6 +22,8 @@ def train():
     highlight_dir = os.path.join(project_root, "data", "Raw", "high")
     save_dir = os.path.join(project_root, "checkpoints", "ZeroDCE")
     preview_dir = os.path.join(project_root, "results", "ZeroDCE", "preview")
+    os.makedirs(lowlight_dir, exist_ok=True)
+    os.makedirs(highlight_dir, exist_ok=True)
     os.makedirs(save_dir, exist_ok=True)
     os.makedirs(preview_dir, exist_ok=True)
 
@@ -69,6 +71,7 @@ def train():
             with torch.no_grad():
                 A = model(sample_low)
                 sample_out = apply_curve(sample_low, A).cpu()
+            os.makedirs(preview_dir, exist_ok=True)
             preview_path = os.path.join(preview_dir, f"epoch_{epoch}.png")
             save_image(torch.cat([sample_low.cpu(), sample_out], dim=0), preview_path, nrow=sample_low.size(0))
             print(f"預覽圖儲存於：{preview_path}")#　第 1 列：低光原圖，第 2 列：ZeroDCE 增強結果，第 3 列：原高光圖
