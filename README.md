@@ -62,9 +62,15 @@ python -m scripts.train_drbn
 
 ![比對圖1](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison1.jpg)
 
+---
+
 ![比對圖2](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison2.jpg)
 
+---
+
 ![比對圖3](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison3.jpg)
+
+---
 
 ![比對圖4](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison4.jpg)
 
