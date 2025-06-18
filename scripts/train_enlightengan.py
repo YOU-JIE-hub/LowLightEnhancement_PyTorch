@@ -134,7 +134,7 @@ def train():
                 os.makedirs(preview_dir, exist_ok=True)
                 preview_path = os.path.join(preview_dir, f"epoch_{epoch}.png")
                 save_image(preview_tensor, preview_path, nrow=3)
-                print(f"預覽圖儲存於：{preview_path}")
+                print(f"預覽圖儲存於：{preview_path}")#　第 1 列：低光原圖，第 2 列：EnlightenGAN 增強結果，第 3 列：原高光圖
             G.train()
 
     print("EnlightenGAN 訓練完成")
