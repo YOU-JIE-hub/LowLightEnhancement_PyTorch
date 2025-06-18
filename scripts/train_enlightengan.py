@@ -51,6 +51,9 @@ def train():
 
     low_dir = os.path.join(project_root, "data", "Raw", "low")
     high_dir = os.path.join(project_root, "data", "Raw", "high")
+    os.makedirs(low_dir, exist_ok=True)
+    os.makedirs(high_dir, exist_ok=True)
+
     train_ds = UnpairedEnlightenDataset(low_dir, high_dir)
     val_ds = ValDataset(low_dir, high_dir)
     train_loader = DataLoader(train_ds, batch_size=4, shuffle=True, num_workers=0)
@@ -127,6 +130,8 @@ def train():
                     high_all.append(high)
                     fake_all.append(fake_tensor)
                 preview_tensor = torch.cat([torch.stack(low_all), torch.stack(fake_all), torch.stack(high_all)], dim=0)
+                os.makedirs(os.path.dirname(preview_dir), exist_ok=True)
+                os.makedirs(preview_dir, exist_ok=True)
                 preview_path = os.path.join(preview_dir, f"epoch_{epoch}.png")
                 save_image(preview_tensor, preview_path, nrow=3)
                 print(f"預覽圖儲存於：{preview_path}")
