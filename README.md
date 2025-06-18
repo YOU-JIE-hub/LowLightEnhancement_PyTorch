@@ -60,20 +60,20 @@ python -m scripts.train_drbn
 
 - 主觀視覺比較：多模型同圖對照強化結果
 
-![比對圖1](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison1.jpg)
+![比對圖1](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_result/2.png)
+比對圖1
 
 ---
 
-![比對圖2](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison2.jpg)
+![比對圖2](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_result/3.png)
+比對圖2
 
 ---
 
-![比對圖3](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison3.jpg)
+![比對圖3](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_result/4.png)
+比對圖3
 
----
-
-![比對圖4](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/comparison4.jpg)
-
+- 評估指標統一使用原始輸出增強圖, 比對圖部分 Zero-DCE 和 freqfilter 有經過統一後處理補光
 ---
 
 ## 模型實作與重構概述
@@ -128,7 +128,7 @@ python -m scripts.train_drbn
 
 實作 log 安全處理與 min-max normalization，輸出穩定適用於部署與視覺化展示
 
-### 7.	FreqFilter（頻域同態濾波）
+### 7.  freqfilter（頻域同態濾波）
 
 還原 Homomorphic Filtering 全流程：log → fft → high-pass Gaussian filter → ifft → exp
 
