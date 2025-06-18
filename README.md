@@ -167,6 +167,7 @@ Google Drive 資料夾結構如下：
 ├── debug/                   # Colab 測試與除錯版本
 ├── debug_checkpoint/        # 測試版本用的 checkpoint
 ├── [model]/                 # 各模型的訓練過程輸出圖
+├── └── post/                # 經後處理（ex: gamma 校正）的最終輸出圖
 ├── [model_val]/             # 各模型的測試結果圖（val set）
 │   └── post/                # 經後處理（ex: gamma 校正）的最終輸出圖
 └── Comparison/              # 多模型對照圖與客觀指標統計（PSNR/SSIM/NIQE）
