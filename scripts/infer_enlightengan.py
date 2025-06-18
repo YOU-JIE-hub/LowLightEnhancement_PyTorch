@@ -7,15 +7,21 @@ from tqdm import tqdm
 from networks.enlightengan_unet import ImprovedUNet
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-model_path = os.path.join(project_root, "checkpoints", "EnlightenGAN", "EnlightenGAN.pth")
+ckpt_path = os.path.join(project_root, "checkpoints", "EnlightenGAN", "checkpoint_epoch_100.pth")
 input_dir  = os.path.join(project_root, "data", "Raw", "low_val")
 save_dir   = os.path.join(project_root, "results", "EnlightenGAN")
 os.makedirs(save_dir, exist_ok=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = ImprovedUNet().to(device)
-checkpoint = torch.load(model_path, map_location=device)
-model.load_state_dict(checkpoint["G"])
+
+# 讀取 "G" 欄位而非整個 dict
+checkpoint = torch.load(ckpt_path, map_location=device)
+if "G" in checkpoint:
+    model.load_state_dict(checkpoint["G"])
+else:
+    model.load_state_dict(checkpoint)  # fallback 舊格式
+
 model.eval()
 
 transform_tensor = transforms.Compose([
@@ -24,7 +30,7 @@ transform_tensor = transforms.Compose([
 ])
 
 for name in tqdm(os.listdir(input_dir), desc="推論 EnlightenGAN"):
-    if not name.lower().endswith((".jpg", ".png")):
+    if not name.lower().endswith((".jpg", ".png", ".jpeg")):
         continue
 
     path = os.path.join(input_dir, name)
@@ -40,4 +46,5 @@ for name in tqdm(os.listdir(input_dir), desc="推論 EnlightenGAN"):
         output = torch.nn.functional.interpolate(output, size=orig_size[::-1], mode="bilinear", align_corners=False)
 
     save_image(output, os.path.join(save_dir, name))
+
 print("所有圖片增強完成，已儲存至:", save_dir)
