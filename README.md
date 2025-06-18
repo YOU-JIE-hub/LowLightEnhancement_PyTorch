@@ -5,7 +5,7 @@
 本專案為元智大學電機工程學系乙組畢業專題，主題聚焦於「低光環境下的影像增強技術」，整合並實作多種低光影像增強模型，包含傳統演算法與深度學習方法，並進行訓練、測試與效果比較分析。
 ```bash
 
-git https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch.git
+git clone https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch.git
 cd LowLightEnhancement_PyTorch
 
 安裝依賴
