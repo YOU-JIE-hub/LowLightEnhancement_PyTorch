@@ -74,7 +74,7 @@ python -m scripts.train_drbn
 
 ## 模型實作與重構概述
 
-1.	RetinexNet
+### 1.	RetinexNet
 
 擴充六種自定義損失（illumination_smoothness、structure、color、brightness_reg、illumination_mean、laplacian 等）
 
@@ -82,7 +82,7 @@ python -m scripts.train_drbn
 
 模組化損失結構與訓練腳本，提升實驗靈活性與效能
 
-2.	DRBN
+### 2.	DRBN
 
 拆解 RecursiveBlock 與 BandBlock 架構，重構模組化模型
 
@@ -92,7 +92,7 @@ python -m scripts.train_drbn
 
 本專題僅參考原模型STEP1部分
 
-3.	EnlightenGAN
+### 3.	EnlightenGAN
 
 將 unpaired 訓練改為 paired（使用 LOL dataset），提升監督效果
 
@@ -100,7 +100,7 @@ python -m scripts.train_drbn
 
 整合 8 項損失（g/d_hinge、L1、LPIPS、VGG、SSIM、Color、Laplacian、TV）達到語意、色彩與結構同步優化
 
-4.	Zero-DCE
+### 4.	Zero-DCE
 
 還原完整 7 層結構輸出 24 通道 A 曲線參數，支援 apply_curve 應用邏輯
 
@@ -108,7 +108,7 @@ python -m scripts.train_drbn
 
 封裝推論後處理與批次測試流程，支援 real-world 圖像增亮任務
 
-5.	LIME
+### 5.	LIME
 
 使用 NumPy 與 Scipy 高斯濾波模擬照明圖平滑過渡
 
@@ -116,7 +116,7 @@ python -m scripts.train_drbn
 
 改善照明圖估計與補光效果，提升細節自然性，適合即時應用部署
 
-6.	RetinexTraditional（基於 MSR）
+### 6.	RetinexTraditional（基於 MSR）
 
 使用 PyTorch conv2d 完整實作 Gaussian 模糊流程，支援三組 sigma（15、80、250）
 
@@ -124,7 +124,7 @@ python -m scripts.train_drbn
 
 實作 log 安全處理與 min-max normalization，輸出穩定適用於部署與視覺化展示
 
-7.	FreqFilter（頻域同態濾波）
+### 7.	FreqFilter（頻域同態濾波）
 
 還原 Homomorphic Filtering 全流程：log → fft → high-pass Gaussian filter → ifft → exp
 
