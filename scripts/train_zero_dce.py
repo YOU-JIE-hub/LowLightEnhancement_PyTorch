@@ -13,7 +13,7 @@ from losses.zero_dce_loss import TVLoss, ColorConstancyLoss, ExposureLoss
 
 def train():
     batch_size = 8
-    num_epochs = 100
+    num_epochs = 1
     lr = 1e-4
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -60,21 +60,22 @@ def train():
         avg_loss = epoch_loss / len(train_loader)
         print(f"[Epoch {epoch:03d}/{num_epochs}] Total Loss: {avg_loss:.4f}")
 
-        if epoch % 20 == 0:
+        if epoch % 1 == 0:
             ckpt_path = os.path.join(save_dir, f"zero_dce_epoch{epoch}.pth")
             torch.save(model.state_dict(), ckpt_path)
             print(f"Checkpoint 儲存於: {ckpt_path}")
 
             model.eval()
-            sample_low, _ = next(iter(train_loader))
-            sample_low = sample_low.to(device)
+            sample_low, sample_high = next(iter(train_loader))
+            sample_low, sample_high = sample_low.to(device), sample_high.to(device)
             with torch.no_grad():
                 A = model(sample_low)
                 sample_out = apply_curve(sample_low, A).cpu()
             os.makedirs(preview_dir, exist_ok=True)
             preview_path = os.path.join(preview_dir, f"epoch_{epoch}.png")
-            save_image(torch.cat([sample_low.cpu(), sample_out], dim=0), preview_path, nrow=sample_low.size(0))
-            print(f"預覽圖儲存於：{preview_path}")#　第 1 列：低光原圖，第 2 列：ZeroDCE 增強結果，第 3 列：原高光圖
+            samples = torch.cat([sample_low.cpu(), sample_out, sample_high.cpu()], dim=0)
+            save_image(samples, preview_path, nrow=sample_low.size(0))
+            print(f"預覽圖儲存於：{preview_path}")  #　第 1 列：低光原圖，第 2 列：ZeroDCE 增強結果，第 3 列：原高光圖
             model.train()
     print("ZeroDCE 訓練完成")
 
