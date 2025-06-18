@@ -7,7 +7,7 @@ from tqdm import tqdm
 from networks.enlightengan_unet import ImprovedUNet
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ckpt_path = os.path.join(project_root, "checkpoints", "EnlightenGAN", "checkpoint_epoch_100.pth")
+ckpt_path = os.path.join(project_root, "checkpoints", "EnlightenGAN", "EnlightenGAN.pth")
 input_dir  = os.path.join(project_root, "data", "Raw", "low_val")
 save_dir   = os.path.join(project_root, "results", "EnlightenGAN")
 os.makedirs(save_dir, exist_ok=True)
@@ -15,12 +15,11 @@ os.makedirs(save_dir, exist_ok=True)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = ImprovedUNet().to(device)
 
-# 讀取 "G" 欄位而非整個 dict
 checkpoint = torch.load(ckpt_path, map_location=device)
-if "G" in checkpoint:
+if isinstance(checkpoint, dict) and "G" in checkpoint:
     model.load_state_dict(checkpoint["G"])
 else:
-    model.load_state_dict(checkpoint)  # fallback 舊格式
+    model.load_state_dict(checkpoint)
 
 model.eval()
 
