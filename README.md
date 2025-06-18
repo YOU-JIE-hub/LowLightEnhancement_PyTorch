@@ -3,7 +3,7 @@
 ---
 
 本專案為元智大學電機工程學系乙組畢業專題，主題聚焦於「低光環境下的影像增強技術」，整合並實作多種低光影像增強模型，包含傳統演算法與深度學習方法，並進行訓練、測試與效果比較分析。
-```bash
+```
 git clone https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch.git
 cd LowLightEnhancement_PyTorch
 ```
@@ -14,7 +14,6 @@ pip install -r requirements.txt
 執行範例(換成對應執行檔案)
 ```
 python -m scripts.train_drbn
-```
 ```
 執行注意事項
 
@@ -137,7 +136,6 @@ python -m scripts.train_drbn
 ---
 
 ## 專案資料夾說明
-
 ```
 LowLightEnhancement_PyTorch/
 ├── Final_Report.pdf              # 畢業專題論文
@@ -192,7 +190,6 @@ Google Drive 資料夾結構如下：
 ```
 Infer: auto-fallback load:
 ```
-
 ckpt = torch.load(ckpt_path, map_location=device)
 if "G_state" in ckpt:
     model.load_state_dict(ckpt["G_state"])
@@ -206,10 +203,10 @@ model.eval()
 ```
 model.load_state_dict(torch.load("xxx.pth", map_location=device))
 ```
-
 ---
 
 ### 模型評估腳本使用說明
+####evaluate_all_models
 #### 輸入要求
 Ground Truth 路徑：
 ```
@@ -232,12 +229,11 @@ results/Comparison/radar_val_group2_traditional.png
 ```
 ### 若無法生成雷達圖：quality_val.csv 欠缺必要欄位或為空
 請確認以下事項：
-
 1. 已先完成所有模型的推論。
 2. 所有預測圖檔皆已存於對應資料夾，檔名與 Ground Truth 一致。
-3. Ground Truth 路徑 data/Raw/high_val/ 下有對應圖片
-。
-### 執行 visualize_comparison 前需確保已執行過7個模型的推論產出結果圖
+3. Ground Truth 路徑 data/Raw/high_val/ 下有對應圖片。
+   
+#### 執行 visualize_comparison 前需確保已執行過7個模型的推論產出結果圖
 ---
 
 ## 環境
