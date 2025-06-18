@@ -1,4 +1,5 @@
 # 《低光影像增強之多模型整合實作與比較分析》（2025/04 – 2025/06）
+---
 
 本專案為元智大學電機工程學系乙組畢業專題，主題聚焦於「低光環境下的影像增強技術」，整合並實作多種低光影像增強模型，包含傳統演算法與深度學習方法，並進行訓練、測試與效果比較分析。
 ```bash
@@ -13,6 +14,14 @@ pip install -r requirements.txt
 python -m scripts.train_drbn
 
 ```
+執行注意事項
+
+- 所有腳本請以 python -m scripts.xxx 格式執行
+- 若要執行推論腳本須確保 checkpoints/ 有對應權重檔, 可直接從下方雲端連結下載資料夾並放進對應位置
+- 若要執行訓練腳本須確保 data/Raw/low、data/Raw/high 皆有資料, 可直接從下方雲端連結下載資料夾並放進對應位置
+- 訓練腳本每 20 epoch 會產生對應預覽圖於 results/[ModelName]/preview/
+- 模型訓練皆會自動儲存至 checkpoints/[ModelName]/ 
+
 ---
 
 ##  專案目標
@@ -141,7 +150,7 @@ LowLightEnhancement_PyTorch/
 
 ## 補充資源（Google Drive）
 
-因 GitHub 空間限制，完整資料集、模型權重與全部結果圖另提供於雲端：
+因 GitHub 空間限制，完整資料集、模型權重、測試版本、全部訓練結果圖及驗證結果圖另提供於雲端連結：
 
 👉 [點我前往下載區（Google Drive）](https://drive.google.com/drive/folders/1ONZraTVOyk__ASMSUu8K3sL6q_jefm26?usp=sharing)
 
@@ -149,15 +158,16 @@ LowLightEnhancement_PyTorch/
 ├── data/ # 原始與合成的低光影像資料集
 ├── debug/ # Colab 測試與除錯版本
 ├── debug_checkpoint # Colab 測試與除錯版本之權重檔 (.pt)
-├── [model]/  [model_val] # 各模型訓練圖及結果測試圖，其中 post 資料夾表經過額外後處理的結果圖
+├── [model]/  [model_val]/ # 各模型訓練圖及結果測試圖，其中 post 資料夾表經過額外後處理的結果圖
 └── Comparison # 結果比對圖及客觀指標統計圖
 
 ---
 
 ## 環境
 
-- Python 3.10, PyTorch 2.x, OpenCV, NumPy
-- Google Colab / VSCode / Linux CLI
+- Python 3.10, PyTorch 2.x
+- OpenCV, PIL, numpy, tqdm
+- Google Colab / VSCode + CUDA
 - 資料集：LOL Dataset
 
 ---
@@ -190,7 +200,7 @@ https://github.com/dongb5/Retinex.
 (2025).
 7.	Oppenheim, A. V., Schafer, R. W., & Stockham, T. G. (1968). Nonlinear Filtering of Multiplied and Convolved Signals. Proceedings of the IEEE, 56(8), 1264–1291.
 
-本專案基於上述開源模型與論文，進行重構、修正與整合，並已於技術報告中完整說明引用來源。
+本專案基於上述開源模型與論文，進行重構、修正與整合。
 
 ---
 
