@@ -41,3 +41,4 @@ for img_name in tqdm(image_names, desc="推論 DRBN"):
 
     except Exception as e:
         print(f"[錯誤] 處理 {img_name} 時發生問題：{e}")
+print("所有圖片增強完成，已儲存至:", save_dir)
