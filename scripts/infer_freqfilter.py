@@ -33,3 +33,5 @@ for filename in tqdm(image_list, desc="推論 FreqFilter"):
 
     except Exception as e:
         print(f"[Error] Failed to process {input_path}: {e}")
+print("所有圖片增強完成，已儲存至:", output_dir_raw)
+print("後處理補光的圖片，已儲存至:", output_dir_post)
