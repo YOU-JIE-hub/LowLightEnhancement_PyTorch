@@ -57,6 +57,8 @@ python -m scripts.train_drbn
 | RetinexTraditional | 13.82   | 0.584   | 17.26   | 13.63   |
 | ZeroDCE            | 12.08   | 0.458   | 4.04    | 7.02    |
 
+- We evaluate enhancement quality using full-reference metrics (PSNR, SSIM) and no-reference metrics (BRISQUE, PI).
+PSNR and SSIM are computed using skimage, BRISQUE via piq, and PI is estimated as 0.5 * (10 + BRISQUE).
 ### 主觀視覺比較：多模型同圖對照強化結果
 #### 比對圖1
 ![比對圖1](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_results/1.jpg)
