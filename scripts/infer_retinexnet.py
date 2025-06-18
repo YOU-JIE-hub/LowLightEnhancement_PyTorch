@@ -6,28 +6,30 @@ from tqdm import tqdm
 
 from networks.retinexnet import UNetDecomNet, EnhanceNetDeep
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-input_folder = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\data\Raw\low_val"
-output_folder = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\results\RetinexNet_val"
-decom_ckpt = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\checkpoints\RetinexNet\RetinexNet_decom_100.pth"
-enhance_ckpt = r"C:\Users\hurry\OneDrive\桌面\LowLightEnhancement_PyTorch\checkpoints\RetinexNet\RetinexNet_enhance_200.pth"
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+input_folder   = os.path.join(project_root, "data", "Raw", "low_val")
+output_folder  = os.path.join(project_root, "results", "RetinexNet")
+decom_ckpt     = os.path.join(project_root, "checkpoints", "RetinexNet", "RetinexNet_decom.pth")
+enhance_ckpt   = os.path.join(project_root, "checkpoints", "RetinexNet", "RetinexNet_enhance.pth")
 
 os.makedirs(output_folder, exist_ok=True)
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 decom_net = UNetDecomNet().to(device)
 enhance_net = EnhanceNetDeep().to(device)
 
-decom_net.load_state_dict(torch.load(decom_ckpt))
-enhance_net.load_state_dict(torch.load(enhance_ckpt))
+decom_net.load_state_dict(torch.load(decom_ckpt, map_location=device))
+enhance_net.load_state_dict(torch.load(enhance_ckpt, map_location=device))
+
 decom_net.eval()
 enhance_net.eval()
-# 圖片轉 Tensor
+
 transform = transforms.ToTensor()
 
 image_list = sorted([f for f in os.listdir(input_folder) if f.lower().endswith(('jpg', 'png'))])
 
-for img_name in tqdm(image_list, desc="Batch Inference"):
+for img_name in tqdm(image_list, desc="推論 RetinexNet"):
     img_path = os.path.join(input_folder, img_name)
     img = Image.open(img_path).convert('RGB')
     img_tensor = transform(img).unsqueeze(0).to(device)
@@ -43,5 +45,4 @@ for img_name in tqdm(image_list, desc="Batch Inference"):
     enhanced_img = Image.fromarray(enhanced_img)
 
     enhanced_img.save(os.path.join(output_folder, img_name))
-
 print("所有圖片增強完成，已儲存至:", output_folder)
