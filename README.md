@@ -59,19 +59,16 @@ python -m scripts.train_drbn
 | ZeroDCE            | 12.08   | 0.458   | 4.04    | 7.02    |
 
 - 主觀視覺比較：多模型同圖對照強化結果
-
+## 比對圖1
 ![比對圖1](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_result/2.png)
-比對圖1
 
 ---
-
+## 比對圖2
 ![比對圖2](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_result/3.png)
-比對圖2
 
 ---
-
+## 比對圖3
 ![比對圖3](https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch/blob/main/example_result/4.png)
-比對圖3
 
 - 評估指標統一使用原始輸出增強圖, 比對圖部分 Zero-DCE 和 freqfilter 有經過統一後處理補光
 ---
