@@ -230,13 +230,14 @@ results/Comparison/quality_val_radar.png
 results/Comparison/radar_val_group1_dl.png
 results/Comparison/radar_val_group2_traditional.png
 ```
-若無法生成雷達圖：quality_val.csv 欠缺必要欄位或為空
+### 若無法生成雷達圖：quality_val.csv 欠缺必要欄位或為空
 請確認以下事項：
 
 1. 已先完成所有模型的推論。
 2. 所有預測圖檔皆已存於對應資料夾，檔名與 Ground Truth 一致。
-3. Ground Truth 路徑 data/Raw/high_val/ 下有對應圖片。
-
+3. Ground Truth 路徑 data/Raw/high_val/ 下有對應圖片
+。
+### 執行 visualize_comparison 前需確保已執行過7個模型的推論產出結果圖
 ---
 
 ## 環境
