@@ -64,6 +64,7 @@ def train_enhancenet(enhance_net, decom_net, train_loader, save_root):
     scaler = GradScaler()
     enhance_ckpt_dir = os.path.join(save_root, "checkpoints", "RetinexNet")
     preview_dir = os.path.join(save_root, "results", "RetinexNet", "preview")
+    os.makedirs(enhance_ckpt_dir, exist_ok=True)
     os.makedirs(preview_dir, exist_ok=True)
     num_epochs = 400
     for epoch in range(1, num_epochs + 1):
@@ -110,9 +111,10 @@ def train_enhancenet(enhance_net, decom_net, train_loader, save_root):
                 I_new, color_map = enhance_net(R_low, I_low)
                 enhanced = (R_low + color_map) * I_new.expand_as(R_low)
                 enhanced = torch.clamp(enhanced, 0, 1).cpu()
+            os.makedirs(preview_dir, exist_ok=True)
             preview_path = os.path.join(preview_dir, f"epoch_{epoch}.png")
             save_image(torch.cat([sample_low, enhanced, sample_gt], dim=0), preview_path, nrow=sample_low.size(0))
-            print(f"預覽圖儲存於：{preview_path}")#　第 1 列：低光原圖，第 2 列：RetinexNet 增強結果，第 3 列：原高光圖
+            print(f"預覽圖儲存於：{preview_path}")#　第 1 列：低光原圖，第 2 列：EnlightenGAN 增強結果，第 3 列：原高光圖
             enhance_net.train()
 
     final_path = os.path.join(enhance_ckpt_dir, "enhance_final.pth")
@@ -125,6 +127,8 @@ def main():
 
     low_dir = os.path.join(save_root, "data", "Raw", "low")
     high_dir = os.path.join(save_root, "data", "Raw", "high")
+    os.makedirs(low_dir, exist_ok=True)
+    os.makedirs(high_dir, exist_ok=True)
 
     train_dataset = LOLPatchDataset(low_dir, high_dir, patch_size=128)
     train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=2)
