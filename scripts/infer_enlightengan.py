@@ -13,11 +13,19 @@ save_dir   = os.path.join(project_root, "results", "EnlightenGAN")
 os.makedirs(save_dir, exist_ok=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"使用設備： {device}")
 model = ImprovedUNet().to(device)
+print("模型載入完成")
 
+# 加入 fallback：支援含 "G"、"G_state"、或純 state_dict
 checkpoint = torch.load(ckpt_path, map_location=device)
-if isinstance(checkpoint, dict) and "G" in checkpoint:
-    model.load_state_dict(checkpoint["G"])
+if isinstance(checkpoint, dict):
+    if "G" in checkpoint:
+        model.load_state_dict(checkpoint["G"])
+    elif "G_state" in checkpoint:
+        model.load_state_dict(checkpoint["G_state"])
+    else:
+        model.load_state_dict(checkpoint)
 else:
     model.load_state_dict(checkpoint)
 
