@@ -70,6 +70,8 @@
 
 加入 CosineAnnealingLR 與結果預覽輸出機制，利於訓練穩定與結果監控
 
+本專題僅參考原模型STEP1部分
+
 3.	EnlightenGAN
 
 將 unpaired 訓練改為 paired（使用 LOL dataset），提升監督效果
