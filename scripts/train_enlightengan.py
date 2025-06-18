@@ -106,8 +106,8 @@ def train():
             checkpoint_path = os.path.join(ckpt_dir, f"checkpoint_epoch_{epoch}.pth")
             checkpoint = {
                 "epoch": epoch,
-                "G_state": G.state_dict(),
-                "D_state": D.state_dict(),
+                "G": G.state_dict(),
+                "D": D.state_dict(),
                 "optG": optG.state_dict(),
                 "optD": optD.state_dict(),
                 "loss": avg_stats
@@ -129,7 +129,7 @@ def train():
                 preview_tensor = torch.cat([torch.stack(low_all), torch.stack(fake_all), torch.stack(high_all)], dim=0)
                 preview_path = os.path.join(preview_dir, f"epoch_{epoch}.png")
                 save_image(preview_tensor, preview_path, nrow=3)
-                print(f"預覽圖儲存於：{preview_path}") #　第 1 列：低光原圖，第 2 列：EnlightenGAN 增強結果，第 3 列：原高光圖
+                print(f"預覽圖儲存於：{preview_path}")
             G.train()
 
     print("EnlightenGAN 訓練完成")
