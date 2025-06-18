@@ -21,7 +21,7 @@ python -m scripts.train_drbn
 - 若要執行推論腳本須確保 checkpoints/ 有對應權重檔, 可從下方雲端連結下載資料夾 checkpoints 然後直接放在根目錄下
 - 若要執行訓練腳本須確保 data/Raw/low、data/Raw/high 皆有資料, 可從下方雲端連結下載資料夾 data 然後直接放在根目錄下
 - 訓練腳本每 20 epoch 會產生對應預覽圖於 results/[ModelName]/preview/
-- 模型訓練皆會自動儲存至 checkpoints/[ModelName]/ 
+- 模型訓練皆會自動儲存至 checkpoints/{ModelName}/ 
 
 ---
 
@@ -229,6 +229,12 @@ results/Comparison/quality_val_radar.png
 results/Comparison/radar_val_group1_dl.png
 results/Comparison/radar_val_group2_traditional.png
 ```
+若無法生成雷達圖：quality_val.csv 欠缺必要欄位或為空
+請確認以下事項：
+
+1. 已先完成所有模型的推論。
+2. 所有預測圖檔皆已存於對應資料夾，檔名與 Ground Truth 一致。
+3. Ground Truth 路徑 data/Raw/high_val/ 下有對應圖片。
 
 ---
 
