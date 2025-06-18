@@ -7,7 +7,7 @@ from traditional.retinex_traditional import enhance_retinex  # 導入 Retinex �
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 input_folder = os.path.join(project_root, "data", "Raw", "low_val")
-output_folder = os.path.join(project_root, "results", "RetinexTraditional")  # 儲存增強圖
+output_folder = os.path.join(project_root, "results", "Retinex_Traditional")  # 儲存增強圖
 
 os.makedirs(output_folder, exist_ok=True)
 
@@ -42,3 +42,4 @@ for img_name in tqdm(image_list, desc="推論 RetinexTraditional"):
 
     except Exception as e:
         print(f"[Error] Failed to process {img_path}: {e}")
+print("所有圖片增強完成，已儲存至:", output_folder)
