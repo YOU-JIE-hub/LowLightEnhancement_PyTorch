@@ -35,7 +35,6 @@ python -m scripts.train_drbn
 ---
 
 ## 已實作模型
-
 ### 傳統方法
 - LIME
 - Retinex（MSRCR）
