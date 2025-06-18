@@ -15,6 +15,7 @@ enhance_ckpt   = os.path.join(project_root, "checkpoints", "RetinexNet", "Retine
 os.makedirs(output_folder, exist_ok=True)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"使用設備： {device}")
 
 decom_net = UNetDecomNet().to(device)
 enhance_net = EnhanceNetDeep().to(device)
@@ -24,7 +25,7 @@ enhance_net.load_state_dict(torch.load(enhance_ckpt, map_location=device))
 
 decom_net.eval()
 enhance_net.eval()
-
+print("模型載入完成")
 transform = transforms.ToTensor()
 
 image_list = sorted([f for f in os.listdir(input_folder) if f.lower().endswith(('jpg', 'png'))])
