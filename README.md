@@ -174,6 +174,40 @@ Google Drive 資料夾結構如下：
 ```
 ---
 
+### 模型儲存和載入格式
+
+#### EnlightenGAN
+- Train: saves complete checkpoint:
+```
+  checkpoint = {
+    "epoch": epoch,
+    "G_state": G.state_dict(),
+    "D_state": D.state_dict(),
+    "optG": optG.state_dict(),
+    "optD": optD.state_dict(),
+    "loss": avg_stats
+  }
+  torch.save(checkpoint, "checkpoint_epoch_{epoch}.pth")
+```
+Infer: auto-fallback load:
+```
+
+ckpt = torch.load(ckpt_path, map_location=device)
+if "G_state" in ckpt:
+    model.load_state_dict(ckpt["G_state"])
+else:
+    model.load_state_dict(ckpt)
+model.eval()
+```
+#### RetinexNet / ZeroDCE / DRBN
+- Train: saves only model weights (.pth)
+- Infer: single-command load:
+```
+model.load_state_dict(torch.load("xxx.pth", map_location=device))
+```
+
+---
+
 ## 環境
 
 - Python 3.10, PyTorch 2.x
