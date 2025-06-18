@@ -31,3 +31,4 @@ for img_name in tqdm(image_list, desc="推論 LIME"):
 
     except Exception as e:
         print(f"[Error] Failed to process {img_path}: {e}")
+print("所有圖片增強完成，已儲存至:", output_folder)
