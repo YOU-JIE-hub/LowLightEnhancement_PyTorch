@@ -138,14 +138,18 @@ python -m scripts.train_drbn
 ## 專案資料夾說明
 
 LowLightEnhancement_PyTorch/
-├──Final_Report.pdf # 畢業專題論文
-├── losses/ # 所有訓練中使用的損失函數定義
-├── networks/ # 各模型架構（RetinexNet、DRBN、Zero-DCE 等）
-├── results/ # 各模型執行後之增強結果比較圖
-├── scripts/ # 執行用的訓練腳本, 推論腳本, 輸出比對圖, 比較指標（train.py, infer.py, visualize_comparison.py, evaluate_all_models.py）
-├── traditional/ # 傳統增強方法實作（LIME、MSR、同態濾波等）
-├── utils/ # 輔助模組（資料分割、預處理、後處理）
-└──  requirements.txt # 執行所需 Python 套件列表
+├── Final_Report.pdf              # 畢業專題論文
+├── losses/                       # 所有訓練中使用的損失函數定義
+├── networks/                     # 各模型架構（RetinexNet、DRBN、Zero-DCE 等）
+├── results/                      # 各模型執行後之增強結果比較圖
+├── scripts/                      # 訓練、推論、比對與指標評估腳本
+│   ├── train_xxx.py              # 各模型訓練腳本（Ex: train_drbn.py）
+│   ├── infer_xxx.py              # 各模型推論腳本（Ex: infer_retinexnet.py）
+│   ├── visualize_comparison.py   # 輸出多模型對照圖
+│   └── evaluate_all_models.py    # 批次計算所有模型的 PSNR / SSIM 等指標
+├── traditional/                  # 傳統增強方法實作（LIME、MSR、同態濾波等）
+├── utils/                        # 資料集切分、資料讀取、後處理模組
+└── requirements.txt              # Python 套件需求清單
 
 ---
 
@@ -155,12 +159,16 @@ LowLightEnhancement_PyTorch/
 
 👉 [點我前往下載區（Google Drive）](https://drive.google.com/drive/folders/1ONZraTVOyk__ASMSUu8K3sL6q_jefm26?usp=sharing)
 
-├── checkpoints/ # 各模型訓練完成之權重檔 (.pt)
-├── data/ # 原始與合成的低光影像資料集
-├── debug/ # Colab 測試與除錯版本
-├── debug_checkpoint # Colab 測試與除錯版本之權重檔 (.pt)
-├── [model]/  [model_val]/ # 各模型訓練圖及結果測試圖，其中 post 資料夾表經過額外後處理的結果圖
-└── Comparison # 結果比對圖及客觀指標統計圖
+Google Drive 資料夾結構如下：
+
+├── checkpoints/             # 各模型訓練完成之權重檔 (.pth)
+├── data/                    # 原始與合成的低光影像資料集（LOL dataset）
+├── debug/                   # Colab 測試與除錯版本
+├── debug_checkpoint/        # 測試版本用的 checkpoint
+├── [model]/                 # 各模型的訓練過程輸出圖
+├── [model_val]/             # 各模型的測試結果圖（val set）
+│   └── post/                # 經後處理（ex: gamma 校正）的最終輸出圖
+└── Comparison/              # 多模型對照圖與客觀指標統計（PSNR/SSIM/NIQE）
 
 ---
 
