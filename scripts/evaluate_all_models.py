@@ -1,5 +1,3 @@
-# scripts/evaluate_all_models.py
-
 import os
 import numpy as np
 from PIL import Image
