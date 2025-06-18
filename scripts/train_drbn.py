@@ -16,7 +16,7 @@ def train():
     ckpt_dir = os.path.join(project_root, "checkpoints", "DRBN")
     preview_dir = os.path.join(project_root, "results", "DRBN", "preview")
     os.makedirs(ckpt_dir, exist_ok=True)
-    os.makedirs(preview_dir, exist_ok=True)
+    os.makedirs(preview_dir, exist_ok=True) 
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = DRBN().to(device)
@@ -74,6 +74,8 @@ def train():
             sample_low, sample_gt = next(iter(loader))
             with torch.no_grad():
                 sample_out = model(sample_low.to(device))
+
+            os.makedirs(preview_dir, exist_ok=True)
             preview_path = os.path.join(preview_dir, f"epoch_{epoch}.png")
             save_image(torch.cat([sample_low, sample_out.cpu(), sample_gt], dim=0), preview_path, nrow=sample_low.size(0))
             print(f"預覽圖儲存於：{preview_path}") #　第 1 列：低光原圖，第 2 列：DRBN 增強結果，第 3 列：原高光圖
