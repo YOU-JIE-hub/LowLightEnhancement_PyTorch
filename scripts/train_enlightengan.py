@@ -103,11 +103,17 @@ def train():
         print(f"[Epoch {epoch}/{num_epochs}] " + " ".join(f"{k}:{v:.4f}" for k, v in avg_stats.items()))
 
         if epoch % 20 == 0:
-            G_path = os.path.join(ckpt_dir, f"G_epoch_{epoch}.pth")
-            D_path = os.path.join(ckpt_dir, f"D_epoch_{epoch}.pth")
-            torch.save({"G": G.state_dict()}, G_path)
-            torch.save(D.state_dict(), D_path)
-            print(f"Checkpoint 儲存於: {G_path}")
+            checkpoint_path = os.path.join(ckpt_dir, f"checkpoint_epoch_{epoch}.pth")
+            checkpoint = {
+                "epoch": epoch,
+                "G_state": G.state_dict(),
+                "D_state": D.state_dict(),
+                "optG": optG.state_dict(),
+                "optD": optD.state_dict(),
+                "loss": avg_stats
+            }
+            torch.save(checkpoint, checkpoint_path)
+            print(f"Checkpoint 儲存於: {checkpoint_path}")
 
             G.eval()
             with torch.no_grad():
