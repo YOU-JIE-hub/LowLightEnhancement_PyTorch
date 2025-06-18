@@ -13,7 +13,7 @@ from losses.zero_dce_loss import TVLoss, ColorConstancyLoss, ExposureLoss
 
 def train():
     batch_size = 8
-    num_epochs = 1
+    num_epochs = 100
     lr = 1e-4
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -60,7 +60,7 @@ def train():
         avg_loss = epoch_loss / len(train_loader)
         print(f"[Epoch {epoch:03d}/{num_epochs}] Total Loss: {avg_loss:.4f}")
 
-        if epoch % 1 == 0:
+        if epoch % 20 == 0:
             ckpt_path = os.path.join(save_dir, f"zero_dce_epoch{epoch}.pth")
             torch.save(model.state_dict(), ckpt_path)
             print(f"Checkpoint 儲存於: {ckpt_path}")
