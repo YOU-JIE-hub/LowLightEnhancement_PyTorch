@@ -3,18 +3,15 @@
 本專案為元智大學電機工程學系乙組畢業專題，主題聚焦於「低光環境下的影像增強技術」，整合並實作多種低光影像增強模型，包含傳統演算法與深度學習方法，並進行訓練、測試與效果比較分析。
 ```bash
 
-克隆專案範例
-git clone https://github.com/yourname/YourRepo.git
-cd YourRepo
+git https://github.com/YOU-JIE-hub/LowLightEnhancement_PyTorch.git
+cd LowLightEnhancement_PyTorch
 
 安裝依賴
 pip install -r requirements.txt
 
-執行訓練腳本
+執行範例(換成對應執行檔案)
 python -m scripts.train_drbn
 
-推論範例
-python -m scripts.infer_retinexnet --input data/low --output results/enhanced
 ```
 ---
 
@@ -135,7 +132,7 @@ LowLightEnhancement_PyTorch/
 ├── losses/ # 所有訓練中使用的損失函數定義
 ├── networks/ # 各模型架構（RetinexNet、DRBN、Zero-DCE 等）
 ├── results/ # 各模型執行後之增強結果比較圖
-├── scripts/ # 執行用的主要訓練與推論腳本（train.py, infer.py）
+├── scripts/ # 執行用的訓練腳本, 推論腳本, 輸出比對圖, 比較指標（train.py, infer.py, visualize_comparison.py, evaluate_all_models.py）
 ├── traditional/ # 傳統增強方法實作（LIME、MSR、同態濾波等）
 ├── utils/ # 輔助模組（資料分割、預處理、後處理）
 └──  requirements.txt # 執行所需 Python 套件列表
