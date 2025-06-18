@@ -17,9 +17,9 @@ python -m scripts.train_drbn
 ```
 執行注意事項
 
-- 所有腳本請以 python -m scripts.xxx 格式執行
-- 若要執行推論腳本須確保 checkpoints/ 有對應權重檔, 可直接從下方雲端連結下載資料夾並放進對應位置
-- 若要執行訓練腳本須確保 data/Raw/low、data/Raw/high 皆有資料, 可直接從下方雲端連結下載資料夾並放進對應位置
+- 所有腳本請在根目錄, 以 python -m scripts.xxx 格式執行
+- 若要執行推論腳本須確保 checkpoints/ 有對應權重檔, 可從下方雲端連結下載資料夾 checkpoints 然後直接放在根目錄下
+- 若要執行訓練腳本須確保 data/Raw/low、data/Raw/high 皆有資料, 可從下方雲端連結下載資料夾 data 然後直接放在根目錄下
 - 訓練腳本每 20 epoch 會產生對應預覽圖於 results/[ModelName]/preview/
 - 模型訓練皆會自動儲存至 checkpoints/[ModelName]/ 
 
