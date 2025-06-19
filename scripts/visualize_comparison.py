@@ -23,7 +23,7 @@ model_configs = {
     "FreqFilter":        (os.path.join(project_root, "results", "FreqFilter", "post"), True),
     "RetinexNet":        (os.path.join(project_root, "results", "RetinexNet"), False),
     "ZeroDCE":           (os.path.join(project_root, "results", "ZeroDCE", "post"), True),
-    "RetinexTraditional":(os.path.join(project_root, "results", "RetinexTraditional"), False),
+    "RetinexTraditional":(os.path.join(project_root, "results", "Retinex_Traditional"), False),
     "LIME":              (os.path.join(project_root, "results", "LIME"), False),
     "EnlightenGAN":      (os.path.join(project_root, "results", "EnlightenGAN"), False),
     "DRBN":              (os.path.join(project_root, "results", "DRBN"), False),
