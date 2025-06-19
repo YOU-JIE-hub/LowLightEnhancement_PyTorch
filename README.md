@@ -207,7 +207,7 @@ model.load_state_dict(torch.load("xxx.pth", map_location=device))
 ---
 
 ## 模型評估腳本使用說明
-###  執行evaluate_all_models, visualize_comparison 前需確保已執行過 7 個模型的推論產出結果圖且有把 data 放進根目錄中 ( 須有 high_val )
+-  執行 evaluate_all_models, visualize_comparison 前需確保已執行過 7 個模型的推論產出結果圖且有把 data 放進根目錄中 ( 須有 high_val )
 ---
 
 ## 環境
