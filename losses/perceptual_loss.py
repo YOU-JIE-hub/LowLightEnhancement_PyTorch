@@ -25,7 +25,6 @@ class PerceptualLoss(nn.Module):
             input = nn.functional.interpolate(input, size=(224, 224), mode='bilinear', align_corners=False)
             target = nn.functional.interpolate(target, size=(224, 224), mode='bilinear', align_corners=False)
 
-        # VGG expects input in range [0,1], normalized
         input = self.transform(input)
         target = self.transform(target)
 
