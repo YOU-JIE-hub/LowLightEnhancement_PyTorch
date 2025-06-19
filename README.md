@@ -9,7 +9,7 @@ cd LowLightEnhancement_PyTorch
 ```
 pip install -r requirements.txt
 ```
-執行範例(換成對應執行檔案)
+執行範例( 換成對應執行檔案 )
 ```
 python -m scripts.train_drbn
 ```
