@@ -1,61 +1,68 @@
-import os
+import os 
 import torch
-import numpy as np
+import torch.nn.functional as F
+from torch.utils.data import DataLoader
+from torchvision.utils import save_image
 from tqdm import tqdm
-from PIL import Image
-from torchvision import transforms
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 from networks.zero_dce import ZeroDCE
-from utils.dce_utils import apply_curve              # 將網路輸出 A 應用於原始圖像曲線上
-from utils.postprocess import postprocess_gamma      # 後處理函式，進行 Gamma + Gain 提亮
+from utils.dataset_lol_dce import LOLPairedDataset
+from utils.dce_utils import apply_curve
+from losses.zero_dce_loss import TVLoss, ColorConstancyLoss, ExposureLoss
 
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-input_folder = os.path.join(project_root, "data", "Raw", "low_val")
-raw_output_folder = os.path.join(project_root, "results", "ZeroDCE")
-post_output_folder = os.path.join(raw_output_folder, "post")
-model_path = os.path.join(project_root, "checkpoints", "ZeroDCE", "zero_dce.pth")
+def train():
+    batch_size = 8
+    num_epochs = 100
+    lr = 1e-4
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-os.makedirs(raw_output_folder, exist_ok=True)
-os.makedirs(post_output_folder, exist_ok=True)
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    lowlight_dir = os.path.join(project_root, "data", "Raw", "low")
+    highlight_dir = os.path.join(project_root, "data", "Raw", "high")
+    save_dir = os.path.join(project_root, "checkpoints", "ZeroDCE")
+    os.makedirs(lowlight_dir, exist_ok=True)
+    os.makedirs(highlight_dir, exist_ok=True)
+    os.makedirs(save_dir, exist_ok=True)
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"使用設備： {device}")
+    train_dataset = LOLPairedDataset(lowlight_dir, highlight_dir)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
 
-model = ZeroDCE().to(device)
-model.load_state_dict(torch.load(model_path, map_location=device))
-model.eval()
-print("模型載入完成")
+    model = ZeroDCE().to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
-transform = transforms.Compose([transforms.ToTensor()])
+    loss_tv = TVLoss()
+    loss_color = ColorConstancyLoss()
+    loss_exposure = ExposureLoss()
 
-img_list = sorted(os.listdir(input_folder))
-print(f"開始 Zero-DCE 推論，共 {len(img_list)} 張圖像...")
+    for epoch in range(1, num_epochs + 1):
+        model.train()
+        epoch_loss = 0.0
+        loop = tqdm(train_loader, desc=f"ZeroDCE Epoch {epoch}/{num_epochs}", ncols=100)
 
-for img_name in tqdm(img_list, desc="推論 Zero-DCE"):
-    img_path = os.path.join(input_folder, img_name)
+        for low_img, _ in loop:
+            low_img = low_img.to(device)
+            optimizer.zero_grad()
 
-    try:
-        img = Image.open(img_path)
-        if img.mode != 'RGB':
-            img = img.convert('RGB')
+            A = model(low_img)  # 預測曲線參數 A
+            enhanced = apply_curve(low_img, A)  # 應用曲線增強影像
 
-        img_tensor = transform(img).unsqueeze(0).to(device)
+            loss = loss_color(enhanced) + loss_exposure(enhanced) + loss_tv(A)
 
-        with torch.no_grad():
-            A = model(img_tensor)
-            enhanced = apply_curve(img_tensor, A)
+            loss.backward()
+            optimizer.step()
 
-        base_name = os.path.splitext(img_name)[0] + ".png"
-        post_name = os.path.splitext(img_name)[0] + "_post.png"
+            epoch_loss += loss.item()
+            loop.set_postfix(loss=loss.item())
 
-        enhanced_np = enhanced.squeeze(0).clamp(0, 1).cpu().numpy().transpose(1, 2, 0) * 255
-        enhanced_np = enhanced_np.astype(np.uint8)
-        raw_img = Image.fromarray(enhanced_np)
-        raw_img.save(os.path.join(raw_output_folder, base_name))
+        avg_loss = epoch_loss / len(train_loader)
+        print(f"[Epoch {epoch:03d}/{num_epochs}] Total Loss: {avg_loss:.4f}")
 
-        post_img = postprocess_gamma(raw_img, gamma=0.5, gain=1.4)
-        post_img.save(os.path.join(post_output_folder, post_name))
+        if epoch % 20 == 0:
+            ckpt_path = os.path.join(save_dir, f"zero_dce_epoch{epoch}.pth")
+            torch.save(model.state_dict(), ckpt_path)
+            print(f"Checkpoint 儲存於: {ckpt_path}")
+    print("ZeroDCE 訓練完成")
 
-    except Exception as e:
-        print(f"無法處理 {img_path}：{e}")
-print("所有圖片增強完成，已儲存至:", raw_output_folder)
-print("後處理補光的圖片，已儲存至:", post_output_folder)
+if __name__ == "__main__":
+    train()
