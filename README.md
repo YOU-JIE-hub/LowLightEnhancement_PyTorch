@@ -207,34 +207,7 @@ model.load_state_dict(torch.load("xxx.pth", map_location=device))
 ---
 
 ## 模型評估腳本使用說明
-### 1. 執行evaluate_all_models時
-#### 輸入要求
-Ground Truth 路徑：
-```
-data/Raw/high_val/
-```
-各模型推論結果需放於：
-```
-results/{模型名_val}/{對應檔名}.png
-```
-#### 輸出內容
-評估指標表格（CSV）：
-```
-results/Comparison/quality_val.csv
-```
-雷達圖可視化：
-```
-results/Comparison/quality_val_radar.png
-results/Comparison/radar_val_group1_dl.png
-results/Comparison/radar_val_group2_traditional.png
-```
-### 2. 若無法生成雷達圖：quality_val.csv 欠缺必要欄位或為空
-請確認以下事項：
-1. 已先完成所有模型的推論。
-2. 所有預測圖檔皆已存於對應資料夾，檔名與 Ground Truth 一致。
-3. Ground Truth 路徑 data/Raw/high_val/ 下有對應圖片。
-   
-### 3. 執行 visualize_comparison 前需確保已執行過7個模型的推論產出結果圖
+###  執行evaluate_all_models, visualize_comparison 前需確保已執行過 7 個模型的推論產出結果圖且有把 data 放進根目錄中 ( 須有 high_val )
 ---
 
 ## 環境
