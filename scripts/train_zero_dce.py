@@ -64,18 +64,6 @@ def train():
             ckpt_path = os.path.join(save_dir, f"zero_dce_epoch{epoch}.pth")
             torch.save(model.state_dict(), ckpt_path)
             print(f"Checkpoint 儲存於: {ckpt_path}")
-
-            model.eval()
-            sample_low, sample_high = next(iter(train_loader))
-            sample_low, sample_high = sample_low.to(device), sample_high.to(device)
-            with torch.no_grad():
-                A = model(sample_low)
-                sample_out = apply_curve(sample_low, A).cpu()
-            os.makedirs(preview_dir, exist_ok=True)
-            preview_path = os.path.join(preview_dir, f"epoch_{epoch}.png")
-            samples = torch.cat([sample_low.cpu(), sample_out, sample_high.cpu()], dim=0)
-            save_image(samples, preview_path, nrow=sample_low.size(0))
-            print(f"預覽圖儲存於：{preview_path}")  #　第 1 列：低光原圖，第 2 列：ZeroDCE 增強結果，第 3 列：原高光圖
             model.train()
     print("ZeroDCE 訓練完成")
 
